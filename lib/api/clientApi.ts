@@ -69,7 +69,7 @@ export async function getMe() {
   return response.data;
 }
 
-export async function updateMe(data: Partial<User>) {
+export async function updateMe(data: { username: string }) {
   const response = await api.patch<User>("/users/me", data);
   return response.data;
 }

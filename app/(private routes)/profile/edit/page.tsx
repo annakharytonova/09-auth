@@ -6,20 +6,24 @@ import { getMe, updateMe } from "@/lib/api/clientApi";
 import { useState, useEffect } from "react";
 import type { User } from "@/types/user";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/lib/store/authStore";
 
 export default function EditProfile() {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
+  const { setUser: setAuthUser } = useAuthStore();
 
   useEffect(() => {
     getMe().then(setUser);
   }, []);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const username = formData.get("username") as string;
-    updateMe({ username }).then(() => router.push("/profile"));
+    const updatedUser = await updateMe({ username });
+    setAuthUser(updatedUser);
+    router.push("/profile");
   }
 
   return (
