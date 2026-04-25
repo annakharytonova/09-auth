@@ -1,11 +1,8 @@
-
-
 import type { Metadata } from "next";
 import css from "./ProfilePage.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { getMe } from "@/lib/api/serverApi";
-// import { useAuthStore } from "@/lib/store/authStore";
 
 export const metadata: Metadata = {
   title: "NoteHub - Profile",
@@ -39,13 +36,15 @@ export default async function Profile() {
             </Link>
           </div>
           <div className={css.avatarWrapper}>
-            {user?.avatar && (<Image
-              src={user?.avatar}
-              alt="User Avatar"
-              width={120}
-              height={120}
-              className={css.avatar}
-            />)}
+            {user?.avatar && (
+              <Image
+                src={user?.avatar}
+                alt="User Avatar"
+                width={120}
+                height={120}
+                className={css.avatar}
+              />
+            )}
           </div>
           <div className={css.profileInfo}>
             <p>Username: {user?.username}</p>
